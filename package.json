@@ -1,19 +1,24 @@
 {
   "name": "vid-chat-lang",
-  "version": "1.0.0",
-  "description": "The test for the vid-chat language",
-  "main": "index.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/Gamer-Guy12/Vid-Chat-Lang/issues"
+  },
+  "homepage": "https://github.com/Gamer-Guy12/Vid-Chat-Lang#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Gamer-Guy12/Vid-Chat-Lang.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Gamer-Guy12/Vid-Chat-Lang/issues"
-  },
-  "homepage": "https://github.com/Gamer-Guy12/Vid-Chat-Lang#readme"
+  "description": "The test for the language on Vid Chat"
 }
