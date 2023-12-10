@@ -2,7 +2,10 @@ export enum NodeType {
     NumericLiteral,
     Program,
     BinaryExpr,
-    Identifier
+    Identifier,
+    VariableDecleration,
+    AssignmentExpr,
+    StringLiteral
 }
 
 export interface Stmt {
@@ -33,4 +36,21 @@ export interface NumericLiteral extends Expr {
 export interface Identifier extends Expr {
     kind: NodeType.Identifier,
     selector: string
+}
+
+export interface VariableDecleration extends Stmt {
+    kind: NodeType.VariableDecleration,
+    selector: string,
+    constant: boolean
+}
+
+export interface AssignmentExpr extends Expr {
+    kind: NodeType.AssignmentExpr,
+    selector: string,
+    value: Expr
+}
+
+export interface StringLiteral extends Expr {
+    kind: NodeType.StringLiteral,
+    value: string
 }
