@@ -1,7 +1,8 @@
 export enum NodeType {
     NumericLiteral,
     Program,
-    BinaryExpr
+    BinaryExpr,
+    Identifier
 }
 
 export interface Stmt {
@@ -27,4 +28,9 @@ export interface BinaryExpr extends Expr {
 export interface NumericLiteral extends Expr {
     kind: NodeType.NumericLiteral,
     value: number
+}
+
+export interface Identifier extends Expr {
+    kind: NodeType.Identifier,
+    selector: string
 }
