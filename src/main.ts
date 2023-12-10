@@ -1,7 +1,7 @@
-import { Environment } from "./Environment";
-import { BinaryExpr, NodeType, NumericLiteral, Program, Identifier, AssignmentExpr, VariableDecleration, StringLiteral } from "./IAST";
-import { evaluate, runProgram } from "./Run";
-import { BooleanValue, NullValue, NumberValue } from "./Runtime";
+import { Environment } from "./Frontend/Environment";
+import { BinaryExpr, NodeType, NumericLiteral, Program, Identifier, AssignmentExpr, VariableDecleration, StringLiteral } from "./Frontend/IAST";
+import { evaluate, runProgram } from "./Frontend/Run";
+import { BooleanValue, NullValue, NumberValue } from "./Frontend/Runtime";
 
 const ast: Program = {
     kind: NodeType.Program,
