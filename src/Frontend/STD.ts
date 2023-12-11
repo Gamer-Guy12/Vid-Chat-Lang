@@ -18,7 +18,9 @@ export class STDFunc {
 let STDs = new Map<string, STDFunc>()
 
 STDs.set("println", new STDFunc((params: Map<string, RuntimeVal>) => {
-    let param = params.get("val") as StringValue
+    let param = params.get("val")
+    if (param?.value === undefined)
+        return { value:"null", type: "null" } as NullValue
     console.log(param.value)
     return { value: "null", type: "null" } as NullValue
 }, ["val"]))
