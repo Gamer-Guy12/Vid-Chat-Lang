@@ -48,7 +48,39 @@ const ast: Program = {
         } as AssignmentExpr,
         {
             kind: NodeType.WhileStmt,
-            condition: {  }
+            condition: {
+                kind: NodeType.BinaryExpr,
+                left: { kind: NodeType.Identifier, selector: "whiles" } as Identifier,
+                right: { kind: NodeType.NumericLiteral, value: 0 } as NumericLiteral,
+                operator: "!="
+            } as BinaryExpr,
+            code: [
+                {
+                    kind: NodeType.FunctionCallExpr,
+                    name: "println",
+                    params: [
+                        {
+                            name: "val",
+                            value: {
+                                kind: NodeType.StringLiteral,
+                                value: "Hello from while loop"
+                            } as StringLiteral
+                        }
+                    ]
+                } as FunctionCallExpr,
+                {
+                    kind: NodeType.BinaryExpr,
+                    left: {
+                        kind: NodeType.Identifier,
+                        selector: "whiles"
+                    } as Identifier,
+                    right: {
+                        kind: NodeType.NumericLiteral,
+                        value: 1
+                    } as NumericLiteral,
+                    operator: "-"
+                } as BinaryExpr
+            ]
         } as WhileStmt,
         {
             kind: NodeType.IfStmt,

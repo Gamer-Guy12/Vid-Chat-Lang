@@ -3,6 +3,7 @@ export type ValueType = "null" | "number" | "boolean" | "string" | "array"
 export interface RuntimeVal {
     type: ValueType,
     constant: boolean
+    value: any
 }
 
 export interface NullValue extends RuntimeVal {

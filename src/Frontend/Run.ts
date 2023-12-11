@@ -118,7 +118,20 @@ export function evalBinExp (expr: BinaryExpr, env: Environment): RuntimeVal {
     let rhs = evaluate(expr.right, env)
 
     if (expr.operator === "==") {
-        
+        if (lhs.value === rhs.value) {
+            return { type: "boolean", value: true, constant: false } as BooleanValue
+        }
+        else {
+            return { type: "boolean", value: false, constant: false } as BooleanValue
+        }
+    }
+    else if (expr.operator === "!=") {
+        if (lhs.value !== rhs.value) {
+            return { type: "boolean", value: true, constant: false } as BooleanValue
+        }
+        else {
+            return { type: "boolean", value: false, constant: false } as BooleanValue
+        }
     }
     if (lhs.type === "number" && rhs.type === "number") {
         return evaluate_num_bin_expr(lhs as NumberValue, rhs as NumberValue, expr.operator)
