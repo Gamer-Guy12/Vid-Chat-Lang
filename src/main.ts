@@ -3,6 +3,7 @@ import { BinaryExpr, NodeType, NumericLiteral, Program, Identifier, AssignmentEx
 import { evaluate, runProgram } from "./Frontend/Run";
 import { BooleanValue, NullValue, NumberValue } from "./Frontend/Runtime";
 
+// TODO: finish arrays
 const ast: Program = {
     kind: NodeType.Program,
     functions: [

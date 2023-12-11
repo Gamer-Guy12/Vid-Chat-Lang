@@ -1,5 +1,5 @@
 import { Environment } from "./Environment";
-import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, ArrayValExpr } from "./IAST";
+import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, ArrayValExpr, IfStmt } from "./IAST";
 import { ArrayValue, BooleanValue, NullValue, NumberValue, RuntimeVal, StringValue } from "./Runtime";
 import { STDs } from "./STD";
 
@@ -50,9 +50,16 @@ export function evaluate (stmt: Stmt, env: Environment): RuntimeVal {
         case NodeType.UnaryExpr:
             let unaryExpr = stmt as UnaryExpr
             return evalUnaryExp(unaryExpr, env)
+        case NodeType.IfStmt:
+            let ifstmt = stmt as IfStmt
+            return evaluate_if(ifstmt, env)
         default:
             throw "Invalid Statement"
     }
+}
+
+export function evaluate_if(ifstmt: IfStmt, env: Environment): RuntimeVal {
+
 }
 
 export function evalUnaryExp (expr: UnaryExpr, env: Environment): RuntimeVal {

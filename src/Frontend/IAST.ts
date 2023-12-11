@@ -9,7 +9,8 @@ export enum NodeType {
     FunctionCallExpr,
     ReturnStmt,
     UnaryExpr,
-    ArrayValExpr
+    ArrayValExpr,
+    IfStmt
 }
 
 export interface Stmt {
@@ -88,4 +89,10 @@ export interface ArrayValExpr extends Expr {
     kind: NodeType.ArrayValExpr,
     name: string,
     index: number
+}
+
+export interface IfStmt extends Stmt {
+    kind: NodeType.IfStmt,
+    condition: Expr,
+    code: Stmt
 }
