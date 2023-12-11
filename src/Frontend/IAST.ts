@@ -8,7 +8,8 @@ export enum NodeType {
     StringLiteral,
     FunctionCallExpr,
     ReturnStmt,
-    UnaryExpr
+    UnaryExpr,
+    ArrayValExpr
 }
 
 export interface Stmt {
@@ -81,4 +82,10 @@ export interface UnaryExpr extends Expr {
     kind: NodeType.UnaryExpr
     expr: Expr,
     operator: UnaryOperator
+}
+
+export interface ArrayValExpr extends Expr {
+    kind: NodeType.ArrayValExpr,
+    name: string,
+    index: number
 }

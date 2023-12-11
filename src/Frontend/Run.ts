@@ -1,6 +1,6 @@
 import { Environment } from "./Environment";
-import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr } from "./IAST";
-import { BooleanValue, NullValue, NumberValue, RuntimeVal, StringValue } from "./Runtime";
+import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, ArrayValExpr } from "./IAST";
+import { ArrayValue, BooleanValue, NullValue, NumberValue, RuntimeVal, StringValue } from "./Runtime";
 import { STDs } from "./STD";
 
 let program: Program;
