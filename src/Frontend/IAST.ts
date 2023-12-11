@@ -14,6 +14,7 @@ export interface Stmt {
 
 export interface Program extends Stmt {
     kind: NodeType.Program,
+    functions: { name: string, func: FunctionDecl }[],
     code: Stmt[]
 }
 
@@ -53,4 +54,9 @@ export interface AssignmentExpr extends Expr {
 export interface StringLiteral extends Expr {
     kind: NodeType.StringLiteral,
     value: string
+}
+
+export interface FunctionDecl {
+    params: string[]
+    code: Stmt[]
 }

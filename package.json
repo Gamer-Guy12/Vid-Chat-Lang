@@ -19,10 +19,14 @@
   "homepage": "https://github.com/Gamer-Guy12/Vid-Chat-Lang#readme",
   "devDependencies": {
     "@types/node": "^20.10.4",
+    "@types/uuid": "^9.0.7",
     "ts-loader": "^9.5.1",
     "tsc": "^2.0.4",
     "typescript": "^5.3.3",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "uuid": "^9.0.1"
   }
 }

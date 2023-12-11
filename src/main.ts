@@ -5,6 +5,27 @@ import { BooleanValue, NullValue, NumberValue } from "./Frontend/Runtime";
 
 const ast: Program = {
     kind: NodeType.Program,
+    functions: [
+        {
+            name: "test",
+            func: {
+                params: [],
+                code: [
+                    {
+                        kind: NodeType.BinaryExpr,
+                        left: { 
+                            operator: "+",
+                            left: { kind: NodeType.NumericLiteral, value: 2 } as NumericLiteral,
+                            right: { kind: NodeType.AssignmentExpr, value: { kind: NodeType.NumericLiteral, value: 3 } as NumericLiteral, selector: "x" } as AssignmentExpr,
+                            kind: NodeType.BinaryExpr
+                        } as BinaryExpr,
+                        right: { kind: NodeType.Identifier, selector: "x" } as Identifier,
+                        operator: "^"
+                    } as BinaryExpr
+                ]
+            }
+        }
+    ],
     code: [
         {
             kind: NodeType.VariableDecleration,
