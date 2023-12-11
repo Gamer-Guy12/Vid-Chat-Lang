@@ -1,5 +1,5 @@
 import { Environment } from "./Frontend/Environment";
-import { BinaryExpr, NodeType, NumericLiteral, Program, Identifier, AssignmentExpr, VariableDecleration, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr } from "./Frontend/IAST";
+import { BinaryExpr, NodeType, NumericLiteral, Program, Identifier, AssignmentExpr, VariableDecleration, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, IfStmt, WhileStmt } from "./Frontend/IAST";
 import { evaluate, runProgram } from "./Frontend/Run";
 import { BooleanValue, NullValue, NumberValue } from "./Frontend/Runtime";
 
@@ -36,6 +36,39 @@ const ast: Program = {
         }
     ],
     code: [
+        {
+            kind: NodeType.VariableDecleration,
+            selector: "whiles",
+            constant: false
+        } as VariableDecleration,
+        {
+            kind: NodeType.AssignmentExpr,
+            selector: "whiles",
+            value: { kind: NodeType.NumericLiteral, value: 5 } as NumericLiteral
+        } as AssignmentExpr,
+        {
+            kind: NodeType.WhileStmt,
+            condition: {  }
+        } as WhileStmt,
+        {
+            kind: NodeType.IfStmt,
+            condition: { kind: NodeType.Identifier, selector: "true" } as Identifier,
+            code: [
+                {
+                    kind: NodeType.FunctionCallExpr,
+                    name: "println",
+                    params: [
+                        {
+                            name: "val",
+                            value: {
+                                kind: NodeType.StringLiteral,
+                                value: "Hello World from if"
+                            } as StringLiteral
+                        }
+                    ]
+                } as FunctionCallExpr
+            ]
+        } as IfStmt,
         {
             kind: NodeType.FunctionCallExpr,
             name: "println",

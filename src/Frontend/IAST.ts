@@ -10,7 +10,8 @@ export enum NodeType {
     ReturnStmt,
     UnaryExpr,
     ArrayValExpr,
-    IfStmt
+    IfStmt,
+    WhileStmt
 }
 
 export interface Stmt {
@@ -25,7 +26,7 @@ export interface Program extends Stmt {
 
 export interface Expr extends Stmt {}
 
-export type Operator = "+" | "-" | "*" | "/" | "%" | "^"
+export type Operator = "+" | "-" | "*" | "/" | "%" | "^" | "=="
 
 export interface BinaryExpr extends Expr {
     kind: NodeType.BinaryExpr
@@ -94,5 +95,11 @@ export interface ArrayValExpr extends Expr {
 export interface IfStmt extends Stmt {
     kind: NodeType.IfStmt,
     condition: Expr,
-    code: Stmt
+    code: Stmt[]
+}
+
+export interface WhileStmt extends Stmt {
+    kind: NodeType.WhileStmt
+    condition: Expr
+    code: Stmt[]
 }

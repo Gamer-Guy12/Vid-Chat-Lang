@@ -1,5 +1,5 @@
 import { Environment } from "./Environment";
-import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, ArrayValExpr, IfStmt } from "./IAST";
+import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, ArrayValExpr, IfStmt, WhileStmt } from "./IAST";
 import { ArrayValue, BooleanValue, NullValue, NumberValue, RuntimeVal, StringValue } from "./Runtime";
 import { STDs } from "./STD";
 
@@ -16,7 +16,7 @@ export function runBlock (code: Stmt[], env: Environment): RuntimeVal {
             let ret = stmt as ReturnStmt
             return evaluate(ret.value, env)
         }
-        console.log(evaluate(stmt, env))
+        evaluate(stmt, env)
     }
 
     return { type: "null", value: "null" } as NullValue
@@ -53,13 +53,34 @@ export function evaluate (stmt: Stmt, env: Environment): RuntimeVal {
         case NodeType.IfStmt:
             let ifstmt = stmt as IfStmt
             return evaluate_if(ifstmt, env)
+        case NodeType.WhileStmt:
+            let whileStmt = stmt as WhileStmt
+            return evaluate_while(whileStmt, env)
         default:
             throw "Invalid Statement"
     }
 }
 
-export function evaluate_if(ifstmt: IfStmt, env: Environment): RuntimeVal {
+export function evaluate_while(whileStmt: WhileStmt, env: Environment): RuntimeVal {
+    let condition = evaluate(whileStmt.condition, env) as BooleanValue
 
+    if (condition.value === true) {
+        runBlock(whileStmt.code, env)
+
+        return evaluate_while(whileStmt, env)
+    }
+
+    return { type: "null", value: "null" } as NullValue
+}
+
+export function evaluate_if(ifstmt: IfStmt, env: Environment): RuntimeVal {
+    let condition = evaluate(ifstmt.condition, env) as BooleanValue
+
+    if (condition.value === true) {
+        return runBlock(ifstmt.code, env)
+    }
+
+    return { type: "null", value: "null" } as NullValue
 }
 
 export function evalUnaryExp (expr: UnaryExpr, env: Environment): RuntimeVal {
@@ -96,6 +117,9 @@ export function evalBinExp (expr: BinaryExpr, env: Environment): RuntimeVal {
     let lhs = evaluate(expr.left, env)
     let rhs = evaluate(expr.right, env)
 
+    if (expr.operator === "==") {
+        
+    }
     if (lhs.type === "number" && rhs.type === "number") {
         return evaluate_num_bin_expr(lhs as NumberValue, rhs as NumberValue, expr.operator)
     }
