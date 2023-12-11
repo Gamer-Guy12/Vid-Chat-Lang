@@ -153,7 +153,7 @@ export function evaluate_str_bin_expr(lhs: StringValue, rhs: StringValue, operat
     }
 }
 
-export function evaluate_num_bin_expr(lhs: NumberValue, rhs: NumberValue, operator: Operator): NumberValue {
+export function evaluate_num_bin_expr(lhs: NumberValue, rhs: NumberValue, operator: Operator): RuntimeVal {
     switch (operator) {
         case "+":
             return { type: "number", value: lhs.value + rhs.value } as NumberValue
@@ -167,6 +167,10 @@ export function evaluate_num_bin_expr(lhs: NumberValue, rhs: NumberValue, operat
             return { type: "number", value: lhs.value % rhs.value } as NumberValue
         case "^":
             return { type: "number", value: lhs.value ** rhs.value } as NumberValue
+        case "<":
+            return { type: "boolean", constant: false, value: lhs.value < rhs.value } as BooleanValue
+        case ">":
+            return { type: "boolean", constant: false, value: lhs.value > rhs.value } as BooleanValue
         default:
             throw "Invalid Operator"
     }

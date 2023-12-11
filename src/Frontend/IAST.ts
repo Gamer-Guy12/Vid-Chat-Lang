@@ -26,7 +26,7 @@ export interface Program extends Stmt {
 
 export interface Expr extends Stmt {}
 
-export type Operator = "+" | "-" | "*" | "/" | "%" | "^" | "==" | "!="
+export type Operator = "+" | "-" | "*" | "/" | "%" | "^" | "==" | "!=" | "<" | ">" | "!"
 
 export interface BinaryExpr extends Expr {
     kind: NodeType.BinaryExpr

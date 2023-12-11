@@ -52,7 +52,7 @@ const ast: Program = {
                 kind: NodeType.BinaryExpr,
                 left: { kind: NodeType.Identifier, selector: "whiles" } as Identifier,
                 right: { kind: NodeType.NumericLiteral, value: 0 } as NumericLiteral,
-                operator: "!="
+                operator: ">"
             } as BinaryExpr,
             code: [
                 {
@@ -69,17 +69,22 @@ const ast: Program = {
                     ]
                 } as FunctionCallExpr,
                 {
-                    kind: NodeType.BinaryExpr,
-                    left: {
-                        kind: NodeType.Identifier,
-                        selector: "whiles"
-                    } as Identifier,
-                    right: {
-                        kind: NodeType.NumericLiteral,
-                        value: 1
-                    } as NumericLiteral,
-                    operator: "-"
-                } as BinaryExpr
+                    kind: NodeType.AssignmentExpr,
+                    selector: "whiles",
+                    value: 
+                    {
+                        kind: NodeType.BinaryExpr,
+                        left: {
+                            kind: NodeType.Identifier,
+                            selector: "whiles"
+                        } as Identifier,
+                        right: {
+                            kind: NodeType.NumericLiteral,
+                            value: 1
+                        } as NumericLiteral,
+                        operator: "-"
+                    } as BinaryExpr
+                } as AssignmentExpr
             ]
         } as WhileStmt,
         {
