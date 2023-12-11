@@ -5,7 +5,10 @@ export enum NodeType {
     Identifier,
     VariableDecleration,
     AssignmentExpr,
-    StringLiteral
+    StringLiteral,
+    FunctionCallExpr,
+    ReturnStmt,
+    UnaryExpr
 }
 
 export interface Stmt {
@@ -59,4 +62,23 @@ export interface StringLiteral extends Expr {
 export interface FunctionDecl {
     params: string[]
     code: Stmt[]
+}
+
+export interface FunctionCallExpr extends Expr {
+    kind: NodeType.FunctionCallExpr,
+    name: string,
+    params: { name: string, value: Expr }[]
+}
+
+export interface ReturnStmt extends Stmt {
+    kind: NodeType.ReturnStmt,
+    value: Expr
+}
+
+export type UnaryOperator = "++" | "--" | "!"
+
+export interface UnaryExpr extends Expr {
+    kind: NodeType.UnaryExpr
+    expr: Expr,
+    operator: UnaryOperator
 }

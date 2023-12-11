@@ -1,5 +1,5 @@
 import { Environment } from "./Frontend/Environment";
-import { BinaryExpr, NodeType, NumericLiteral, Program, Identifier, AssignmentExpr, VariableDecleration, StringLiteral } from "./Frontend/IAST";
+import { BinaryExpr, NodeType, NumericLiteral, Program, Identifier, AssignmentExpr, VariableDecleration, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr } from "./Frontend/IAST";
 import { evaluate, runProgram } from "./Frontend/Run";
 import { BooleanValue, NullValue, NumberValue } from "./Frontend/Runtime";
 
@@ -9,24 +9,55 @@ const ast: Program = {
         {
             name: "test",
             func: {
-                params: [],
+                params: ["z"],
                 code: [
                     {
                         kind: NodeType.BinaryExpr,
                         left: { 
                             operator: "+",
                             left: { kind: NodeType.NumericLiteral, value: 2 } as NumericLiteral,
-                            right: { kind: NodeType.AssignmentExpr, value: { kind: NodeType.NumericLiteral, value: 3 } as NumericLiteral, selector: "x" } as AssignmentExpr,
+                            right: { kind: NodeType.NumericLiteral, value: 4 } as NumericLiteral,
                             kind: NodeType.BinaryExpr
                         } as BinaryExpr,
-                        right: { kind: NodeType.Identifier, selector: "x" } as Identifier,
+                        right: { kind: NodeType.NumericLiteral, value: 3 } as NumericLiteral,
                         operator: "^"
-                    } as BinaryExpr
+                    } as BinaryExpr,
+                    {
+                        kind: NodeType.ReturnStmt,
+                        value: {
+                            kind: NodeType.UnaryExpr,
+                            expr: { kind: NodeType.Identifier, selector: "z" } as Identifier,
+                            operator: "++"
+                        } as UnaryExpr
+                    } as ReturnStmt
                 ]
             }
         }
     ],
     code: [
+        {
+            kind: NodeType.FunctionCallExpr,
+            name: "println",
+            params: [
+                {
+                    name: "val",
+                    value: {
+                        kind: NodeType.StringLiteral,
+                        value: "Hello World"
+                    } as StringLiteral
+                }
+            ]
+        } as FunctionCallExpr,
+        {
+            kind: NodeType.BinaryExpr,
+            operator: "^",
+            left: { kind: NodeType.NumericLiteral, value: 10 } as NumericLiteral,
+            right: {
+                kind: NodeType.FunctionCallExpr,
+                name: "test",
+                params: [{ name: "z", value: { kind: NodeType.NumericLiteral, value: 3 } as NumericLiteral }]
+            } as FunctionCallExpr
+        } as BinaryExpr,
         {
             kind: NodeType.VariableDecleration,
             selector: "y",
