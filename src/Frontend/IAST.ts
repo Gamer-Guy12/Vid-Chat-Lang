@@ -14,7 +14,8 @@ export enum NodeType {
     WhileStmt,
     ArrayDecleration,
     ObjectDecleration,
-    ObjectValExpr
+    ObjectValExpr,
+    FunctionRef
 }
 
 export interface Stmt {
@@ -121,4 +122,9 @@ export interface ObjectValExpr extends Expr {
     kind: NodeType.ObjectValExpr,
     selector: string,
     element: string
+}
+
+export interface FunctionRef extends Expr {
+    kind: NodeType.FunctionRef,
+    func: FunctionCallExpr
 }

@@ -1,4 +1,4 @@
-import { NodeType, NumericLiteral, BinaryExpr, UnaryExpr, ReturnStmt, ArrayDecleration, ArrayValExpr, StringLiteral, AssignmentExpr, FunctionCallExpr, VariableDecleration, WhileStmt, IfStmt, Program, Identifier, ObjectDecleration, ObjectValExpr } from "./Frontend/IAST";
+import { NodeType, NumericLiteral, BinaryExpr, UnaryExpr, ReturnStmt, ArrayDecleration, ArrayValExpr, StringLiteral, AssignmentExpr, FunctionCallExpr, VariableDecleration, WhileStmt, IfStmt, Program, Identifier, ObjectDecleration, ObjectValExpr, FunctionRef } from "./Frontend/IAST";
 
 export const ast: Program = {
     kind: NodeType.Program,
@@ -29,9 +29,55 @@ export const ast: Program = {
                     } as ReturnStmt
                 ]
             }
+        },
+        {
+            name: "print",
+            func: {
+                params: ["val"],
+                code: [
+                    {
+                        name: "execute",
+                        kind: NodeType.FunctionCallExpr,
+                        params: [
+                            {
+                                name: "func",
+                                value: {
+                                    kind: NodeType.Identifier,
+                                    selector: "val"
+                                } as Identifier
+                            }
+                        ]
+                    } as FunctionCallExpr
+                ]
+            }
         }
     ],
     code: [
+        {
+            kind: NodeType.FunctionCallExpr,
+            name: "print",
+            params: [
+                {
+                    name: "val",
+                    value: {
+                        kind: NodeType.FunctionRef,
+                        func: {
+                            name: "println",
+                            kind: NodeType.FunctionCallExpr,
+                            params: [
+                                {
+                                    name: "val",
+                                    value: {
+                                        kind: NodeType.StringLiteral,
+                                        value: "Hello Ref"
+                                    } as StringLiteral
+                                }
+                            ]
+                        } as FunctionCallExpr
+                    } as FunctionRef
+                }
+            ]
+        } as FunctionCallExpr,
         {
             kind: NodeType.ObjectDecleration,
             selector: "obj",

@@ -1,4 +1,6 @@
-export type ValueType = "null" | "number" | "boolean" | "string" | "array" | "object"
+import { FunctionCallExpr } from "./IAST"
+
+export type ValueType = "null" | "number" | "boolean" | "string" | "array" | "object" | "funcref"
 
 export interface RuntimeVal {
     type: ValueType,
@@ -34,4 +36,9 @@ export interface ArrayValue extends RuntimeVal {
 export interface ObjectValue extends RuntimeVal {
     type: "object"
     value: { key: string, value: RuntimeVal }[]
+}
+
+export interface FuncRefValue extends RuntimeVal {
+    type: "funcref"
+    value: FunctionCallExpr
 }

@@ -1,6 +1,6 @@
 import { Environment } from "./Environment";
-import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, ArrayValExpr, IfStmt, WhileStmt, ArrayDecleration, ObjectDecleration, ObjectValExpr } from "./IAST";
-import { ArrayValue, BooleanValue, NullValue, NumberValue, ObjectValue, RuntimeVal, StringValue } from "./Runtime";
+import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, ArrayValExpr, IfStmt, WhileStmt, ArrayDecleration, ObjectDecleration, ObjectValExpr, FunctionRef } from "./IAST";
+import { ArrayValue, BooleanValue, FuncRefValue, NullValue, NumberValue, ObjectValue, RuntimeVal, StringValue } from "./Runtime";
 import { STDs } from "./STD";
 
 let program: Program;
@@ -69,6 +69,9 @@ export function evaluate (stmt: Stmt, env: Environment): RuntimeVal {
         case NodeType.ObjectValExpr:
             let object = stmt as ObjectValExpr
             return evaluate_object(object, env)
+        case NodeType.FunctionRef:
+            let fref = stmt as FunctionRef
+            return { type: "funcref", value: fref.func } as FuncRefValue
         default:
             throw "Invalid Statement"
     }
@@ -226,7 +229,7 @@ export function call_func (func: FunctionCallExpr, env: Environment): RuntimeVal
             func.params.forEach(value => {
                 params.set(value.name, evaluate(value.value, env))
             })
-            std?.execute(params)
+            std?.execute(params, env)
         }
     }
 
