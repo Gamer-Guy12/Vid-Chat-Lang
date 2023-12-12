@@ -1,5 +1,5 @@
 import { Environment } from "./Frontend/Environment";
-import { BinaryExpr, NodeType, NumericLiteral, Program, Identifier, AssignmentExpr, VariableDecleration, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, IfStmt, WhileStmt } from "./Frontend/IAST";
+import { BinaryExpr, NodeType, NumericLiteral, Program, Identifier, AssignmentExpr, VariableDecleration, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, IfStmt, WhileStmt, ArrayDecleration, ArrayValExpr } from "./Frontend/IAST";
 import { evaluate, runProgram } from "./Frontend/Run";
 import { BooleanValue, NullValue, NumberValue } from "./Frontend/Runtime";
 
@@ -36,6 +36,34 @@ const ast: Program = {
         }
     ],
     code: [
+        {
+            kind: NodeType.ArrayDecleration,
+            selector: "arr",
+            constant: false
+        } as ArrayDecleration,
+        {
+            kind: NodeType.AssignmentExpr,
+            selector: {
+                kind: NodeType.ArrayValExpr,
+                index: 0,
+                name: "arr"
+            } as ArrayValExpr,
+            value: { kind: NodeType.StringLiteral, value: "Hello Array" } as StringLiteral
+        } as AssignmentExpr,
+        {
+            kind: NodeType.FunctionCallExpr,
+            name: "println",
+            params: [
+                {
+                    name: "val",
+                    value: {
+                        kind: NodeType.ArrayValExpr,
+                        index: 0,
+                        name: "arr"
+                    } as ArrayValExpr
+                }
+            ]
+        } as FunctionCallExpr,
         {
             kind: NodeType.VariableDecleration,
             selector: "whiles",

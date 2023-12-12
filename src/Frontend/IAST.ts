@@ -11,7 +11,8 @@ export enum NodeType {
     UnaryExpr,
     ArrayValExpr,
     IfStmt,
-    WhileStmt
+    WhileStmt,
+    ArrayDecleration
 }
 
 export interface Stmt {
@@ -102,4 +103,9 @@ export interface WhileStmt extends Stmt {
     kind: NodeType.WhileStmt
     condition: Expr
     code: Stmt[]
+}
+
+export interface ArrayDecleration extends Stmt {
+    kind: NodeType.ArrayDecleration,
+    selector: string
 }

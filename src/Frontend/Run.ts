@@ -1,5 +1,5 @@
 import { Environment } from "./Environment";
-import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, ArrayValExpr, IfStmt, WhileStmt } from "./IAST";
+import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, ArrayValExpr, IfStmt, WhileStmt, ArrayDecleration } from "./IAST";
 import { ArrayValue, BooleanValue, NullValue, NumberValue, RuntimeVal, StringValue } from "./Runtime";
 import { STDs } from "./STD";
 
@@ -57,9 +57,19 @@ export function evaluate (stmt: Stmt, env: Environment): RuntimeVal {
         case NodeType.WhileStmt:
             let whileStmt = stmt as WhileStmt
             return evaluate_while(whileStmt, env)
+        case NodeType.ArrayValExpr:
+            let arr = stmt as ArrayValExpr
+            return evaluate_array(arr, env)
+        case NodeType.ArrayDecleration:
+            let array = stmt as ArrayDecleration
+            return env.defineVar(array.selector, { type: "array", constant: false, value: [] } as ArrayValue)
         default:
             throw "Invalid Statement"
     }
+}
+
+export function evaluate_array(arr: ArrayValExpr, env: Environment): RuntimeVal {
+    return env.findVar(arr.name).value[arr.index]
 }
 
 export function evaluate_while(whileStmt: WhileStmt, env: Environment): RuntimeVal {

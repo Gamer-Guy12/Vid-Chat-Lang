@@ -1,5 +1,5 @@
-import { Expr, NodeType, Identifier } from "./IAST"
-import { RuntimeVal } from "./Runtime"
+import { Expr, NodeType, Identifier, ArrayValExpr } from "./IAST"
+import { ArrayValue, RuntimeVal } from "./Runtime"
 
 export class Environment {
     private parent?: Environment
@@ -25,7 +25,7 @@ export class Environment {
             return this.variables.get(name) as RuntimeVal
         }
         else {
-            if (this.parent) {
+            if (this.parent !== undefined) {
                 return this.parent.findVar(name)
             }
             else {
@@ -40,7 +40,7 @@ export class Environment {
 
             let val = name as Identifier
             
-            if (this.parent) {
+            if (this.parent !== undefined) {
                 if (!this.variables.has(val.selector)) {
                     return this.parent.setVar(name, value)
                 }
@@ -56,6 +56,32 @@ export class Environment {
             }
 
             this.variables.set(val.selector, value)
+        }
+
+        else if (name.kind === NodeType.ArrayValExpr) {
+
+            let val = name as ArrayValExpr
+            
+            if (this.parent) {
+                if (!this.variables.has(val.name)) {
+                    return this.parent.setVar(name, value)
+                }
+            }
+            else {
+                if (!this.variables.has(val.name)) {
+                    throw "This variable does not exist"
+                }
+            }
+
+            if (this.variables.get(val.name)?.constant === true) {
+                throw "This variable is constant"
+            }
+
+            let expr = name as ArrayValExpr
+            let arr = this.findVar(expr.name)
+            arr.value[expr.index] = value
+
+            this.variables.set(expr.name, arr)
         }
 
         return value
