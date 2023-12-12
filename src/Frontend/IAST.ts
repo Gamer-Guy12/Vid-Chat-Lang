@@ -53,7 +53,7 @@ export interface VariableDecleration extends Stmt {
 
 export interface AssignmentExpr extends Expr {
     kind: NodeType.AssignmentExpr,
-    selector: string,
+    selector: Expr,
     value: Expr
 }
 

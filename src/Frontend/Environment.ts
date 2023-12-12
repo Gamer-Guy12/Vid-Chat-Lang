@@ -1,3 +1,4 @@
+import { Expr, NodeType, Identifier } from "./IAST"
 import { RuntimeVal } from "./Runtime"
 
 export class Environment {
@@ -33,16 +34,22 @@ export class Environment {
         }
     }
 
-    setVar (name: string, value: RuntimeVal): RuntimeVal {
-        if (!this.variables.has(name)) {
-            throw "Variable does not exist"
-        }
+    setVar (name: Expr, value: RuntimeVal): RuntimeVal {
 
-        if (this.variables.get(name)?.constant === true) {
-            throw "This variable is constant"
-        }
+        if (name.kind === NodeType.Identifier) {
 
-        this.variables.set(name, value)
+            let val = name as Identifier
+            
+            if (!this.variables.has(val.selector)) {
+                throw "Variable does not exist"
+            }
+
+            if (this.variables.get(val.selector)?.constant === true) {
+                throw "This variable is constant"
+            }
+
+            this.variables.set(val.selector, value)
+        }
 
         return value
     }

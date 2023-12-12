@@ -43,7 +43,10 @@ const ast: Program = {
         } as VariableDecleration,
         {
             kind: NodeType.AssignmentExpr,
-            selector: "whiles",
+            selector: {
+                kind: NodeType.Identifier,
+                selector: "whiles"
+            } as Identifier,
             value: { kind: NodeType.NumericLiteral, value: 5 } as NumericLiteral
         } as AssignmentExpr,
         {
@@ -70,7 +73,10 @@ const ast: Program = {
                 } as FunctionCallExpr,
                 {
                     kind: NodeType.AssignmentExpr,
-                    selector: "whiles",
+                    selector: {
+                        kind: NodeType.Identifier,
+                        selector: "whiles"
+                    } as Identifier,
                     value: 
                     {
                         kind: NodeType.BinaryExpr,
@@ -136,7 +142,10 @@ const ast: Program = {
         } as VariableDecleration,
         {
             kind: NodeType.AssignmentExpr,
-            selector: "y",
+            selector: {
+                kind: NodeType.Identifier,
+                selector: "y"
+            } as Identifier,
             value: {
                 kind: NodeType.StringLiteral,
                 value: "Hello"
@@ -144,7 +153,10 @@ const ast: Program = {
         } as AssignmentExpr,
         {
             kind: NodeType.AssignmentExpr,
-            selector: "y",
+            selector: {
+                kind: NodeType.Identifier,
+                selector: "y"
+            } as Identifier,
             value: {
                 kind: NodeType.BinaryExpr,
                 operator: "+",
@@ -165,7 +177,10 @@ const ast: Program = {
         } as VariableDecleration,
         {
             kind: NodeType.AssignmentExpr,
-            selector: "x",
+            selector: {
+                kind: NodeType.Identifier,
+                selector: "x"
+            } as Identifier,
             value: { kind: NodeType.NumericLiteral, value: 10 } as NumericLiteral
         } as AssignmentExpr,
         {
@@ -176,7 +191,10 @@ const ast: Program = {
                 right: { kind: NodeType.AssignmentExpr, value: {
                     kind: NodeType.NumericLiteral,
                     value: 3
-                } as NumericLiteral, selector: "x" } as AssignmentExpr,
+                } as NumericLiteral, selector: {
+                    kind: NodeType.Identifier,
+                    selector: "x"
+                } as Identifier } as AssignmentExpr,
                 kind: NodeType.BinaryExpr
             } as BinaryExpr,
             right: { kind: NodeType.Identifier, selector: "x" } as Identifier,
