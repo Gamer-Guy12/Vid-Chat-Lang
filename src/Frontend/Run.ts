@@ -51,8 +51,9 @@ export function evaluate (stmt: Stmt, env: Environment): RuntimeVal {
             let unaryExpr = stmt as UnaryExpr
             return evalUnaryExp(unaryExpr, env)
         case NodeType.IfStmt:
+            let ifEnv = new Environment(env)
             let ifstmt = stmt as IfStmt
-            return evaluate_if(ifstmt, env)
+            return evaluate_if(ifstmt, ifEnv)
         case NodeType.WhileStmt:
             let whileStmt = stmt as WhileStmt
             return evaluate_while(whileStmt, env)
@@ -62,12 +63,13 @@ export function evaluate (stmt: Stmt, env: Environment): RuntimeVal {
 }
 
 export function evaluate_while(whileStmt: WhileStmt, env: Environment): RuntimeVal {
-    let condition = evaluate(whileStmt.condition, env) as BooleanValue
+    let whileEnv = new Environment(env)
+    let condition = evaluate(whileStmt.condition, whileEnv) as BooleanValue
 
     if (condition.value === true) {
-        runBlock(whileStmt.code, env)
+        runBlock(whileStmt.code, whileEnv)
 
-        return evaluate_while(whileStmt, env)
+        return evaluate_while(whileStmt, whileEnv)
     }
 
     return { type: "null", value: "null" } as NullValue

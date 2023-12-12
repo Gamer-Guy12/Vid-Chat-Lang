@@ -40,8 +40,15 @@ export class Environment {
 
             let val = name as Identifier
             
-            if (!this.variables.has(val.selector)) {
-                throw "Variable does not exist"
+            if (this.parent) {
+                if (!this.variables.has(val.selector)) {
+                    return this.parent.setVar(name, value)
+                }
+            }
+            else {
+                if (!this.variables.has(val.selector)) {
+                    throw "This variable does not exist"
+                }
             }
 
             if (this.variables.get(val.selector)?.constant === true) {
