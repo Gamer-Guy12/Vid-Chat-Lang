@@ -12,7 +12,9 @@ export enum NodeType {
     ArrayValExpr,
     IfStmt,
     WhileStmt,
-    ArrayDecleration
+    ArrayDecleration,
+    ObjectDecleration,
+    ObjectValExpr
 }
 
 export interface Stmt {
@@ -108,4 +110,15 @@ export interface WhileStmt extends Stmt {
 export interface ArrayDecleration extends Stmt {
     kind: NodeType.ArrayDecleration,
     selector: string
+}
+
+export interface ObjectDecleration extends Stmt {
+    kind: NodeType.ObjectDecleration,
+    selector: string
+}
+
+export interface ObjectValExpr extends Expr {
+    kind: NodeType.ObjectValExpr,
+    selector: string,
+    element: string
 }

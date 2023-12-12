@@ -1,6 +1,6 @@
 import { Environment } from "./Environment";
-import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, ArrayValExpr, IfStmt, WhileStmt, ArrayDecleration } from "./IAST";
-import { ArrayValue, BooleanValue, NullValue, NumberValue, RuntimeVal, StringValue } from "./Runtime";
+import { BinaryExpr, NodeType, NumericLiteral, Operator, Stmt, Identifier, VariableDecleration, AssignmentExpr, Program, StringLiteral, FunctionCallExpr, ReturnStmt, UnaryExpr, ArrayValExpr, IfStmt, WhileStmt, ArrayDecleration, ObjectDecleration, ObjectValExpr } from "./IAST";
+import { ArrayValue, BooleanValue, NullValue, NumberValue, ObjectValue, RuntimeVal, StringValue } from "./Runtime";
 import { STDs } from "./STD";
 
 let program: Program;
@@ -63,9 +63,28 @@ export function evaluate (stmt: Stmt, env: Environment): RuntimeVal {
         case NodeType.ArrayDecleration:
             let array = stmt as ArrayDecleration
             return env.defineVar(array.selector, { type: "array", constant: false, value: [] } as ArrayValue)
+        case NodeType.ObjectDecleration:
+            let obj = stmt as ObjectDecleration
+            return env.defineVar(obj.selector, { type: "object", constant: false, value: [] } as ObjectValue)
+        case NodeType.ObjectValExpr:
+            let object = stmt as ObjectValExpr
+            return evaluate_object(object, env)
         default:
             throw "Invalid Statement"
     }
+}
+
+export function evaluate_object(object: ObjectValExpr, env: Environment): RuntimeVal {
+    let obj = env.findVar(object.selector) as ObjectValue
+    let val: RuntimeVal = { type: "null", value: "null" } as NullValue
+
+    obj.value.forEach((value) => {
+        if (value.key === object.element) {
+            val = value.value
+        }
+    })
+
+    return val
 }
 
 export function evaluate_array(arr: ArrayValExpr, env: Environment): RuntimeVal {
