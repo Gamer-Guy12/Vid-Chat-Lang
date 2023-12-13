@@ -2,11 +2,22 @@ export enum TokenType {
     Let,
     Identifier,
     Equals,
-    NumericLiteral
+    NumericLiteral,
+    BinaryOperator
 }
 
 let core: Record<string, TokenType> = {
     "let": TokenType.Let
+}
+
+let schar: Record<string, TokenType> = {
+    "=": TokenType.Equals,
+    "+": TokenType.BinaryOperator,
+    "*": TokenType.BinaryOperator,
+    "/": TokenType.BinaryOperator,
+    "-": TokenType.BinaryOperator,
+    "%": TokenType.BinaryOperator,
+    "^": TokenType.BinaryOperator
 }
 
 interface Token {
@@ -19,15 +30,21 @@ export function ignore(str: string): boolean {
 }
 
 export function isint(code: string): boolean {
-    let bounds = ['0'.charCodeAt(0), '9'.charCodeAt(0)]
+    if (code.search(/[a-zA-Z1-9\.]/) !== -1) {
+        return true
+    }
+    else {
+        return false
+    }
+}
 
-    if (code.charCodeAt(0) >= bounds[0] && code.charCodeAt(0) <= bounds[1]) {
+export function isalpha(code: string): boolean {
+    if (code.search(/[a-zA-Z]/) !== -1) {
         return true
     }
-    else if (code === ".") {
-        return true
+    else {
+        return false
     }
-    else return false
 }
 
 export function tokenize(code: string): Token[] {
@@ -39,8 +56,8 @@ export function tokenize(code: string): Token[] {
             continue;
         }
 
-        if (chars[0] === "=") {
-            tokens.push({type: TokenType.Equals, value: chars.shift() as string})
+        if (schar[chars[0]] !== undefined) {
+            tokens.push({type: schar[chars[0]], value: chars.shift() as string})
             continue
         }
         else {
@@ -60,7 +77,18 @@ export function tokenize(code: string): Token[] {
                 continue
             }
             else {
-                
+                let str: string = ""
+                while (isalpha(chars[0])) {
+                    str = str + chars.shift() as string
+                }
+                if (core[str] !== undefined) {
+                    tokens.push({type: core[str], value: str})
+                    continue
+                }
+                else {
+                    tokens.push({type: TokenType.Identifier, value: str})
+                    continue
+                }
             }
         }
     }
